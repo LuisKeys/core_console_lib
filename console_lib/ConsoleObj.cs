@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace core_console_lib
 {
@@ -9,30 +8,56 @@ namespace core_console_lib
         private int _columns = 132;
         private int _rows = 40;
 
-        private List<char[]> _lines = new List<char[]>();
+        private ConsoleColor _fontColor = ConsoleColor.DarkYellow;
+        private ConsoleColor _fontBackColor = ConsoleColor.Black;
+        private ConsoleColor _backgroundColor = ConsoleColor.Black;
+
         public ConsoleObj() 
         {
             this.SetSize(_columns, _rows);
-            this.InitBuffer();
+            this.SetColors(_fontColor, _fontBackColor, _backgroundColor);
+            this.SendCursorToBottom();
         }
 
-        public ConsoleObj(int columns, int rows) 
+        public ConsoleObj(int columns, int rows, ConsoleColor fontColor, ConsoleColor fontBackColor, ConsoleColor backgroundColor) 
         {
             this.SetSize(columns, rows);
+            this.SetColors(fontColor, fontBackColor, backgroundColor);
+        }
+
+        public void SetColors(ConsoleColor fontColor, ConsoleColor fontBackColor)
+        {
+            _fontColor = fontColor;
+            _fontBackColor = fontBackColor;
+            Console.ForegroundColor = _fontColor;
+            Console.BackgroundColor = _fontBackColor;
+        }
+
+        public void SetColors(ConsoleColor fontColor, ConsoleColor fontBackColor, ConsoleColor backgroundColor)
+        {
+            _fontColor = fontColor;
+            _fontBackColor = fontBackColor;
+            _backgroundColor = backgroundColor;
+            Console.ForegroundColor = _fontColor;
+            Console.BackgroundColor = _backgroundColor;
         }
 
         public void SetSize(int columns, int rows)
         {
             this.Clear();
-            Console.SetWindowSize(columns, rows);
+            Console.SetWindowSize(columns, rows + 1);
             _columns = columns;
             _rows = rows;
-            this.InitBuffer();
         }
 
         public (int, int) GetSize()
         {
             return (_columns, _rows);
+        }
+
+        public (ConsoleColor, ConsoleColor) GetColors()
+        {
+            return (_fontColor, _backgroundColor);
         }
 
         public bool IsValidCoord(int column, int row)
@@ -53,61 +78,24 @@ namespace core_console_lib
             Console.Clear();
         }
 
-        public void InitBuffer()
+        public void SetCursorPosition(int column, int row) 
         {
-            _lines.Clear();
-            for(int row = 0; row < _rows; ++row)
-            {
-                char[] line = new char[_columns];
-                for(int column = 0; column < _columns; ++column)
-                {
-                    line[column] = Convert.ToChar(" ");
-                }
-
-                _lines.Add(line);
-            }
+            Console.SetCursorPosition(column, row);
+        }
+        public void Write(int column, int row, string text) 
+        {
+            this.SetCursorPosition(column, row);
+            Console.Write(text);
         }
 
-        public char[] GetLine(int row)
+        public void SendCursorToBottom() 
         {
-            return _lines[row];            
-        }
-
-        public List<char[]> GetLines()
-        {
-            return _lines;            
-        }
-
-        public void SetLine(int row, char[] line)
-        {
-            _lines[row] = line;
-        }
-
-        public void Render()
-        {
-            int i = 0;            
-            foreach(char[] line in _lines)
-            {
-                StringBuilder lineSB = new StringBuilder();
-                string character;
-                for(int column = 0; column < _columns; column++)
-                {
-                    character = line[column].ToString();
-                    lineSB.Append(character);
-                }
-
-                if(i == _rows - 1)
-                {
-                    Console.Write(lineSB.ToString());
-                }                    
-                else
-                {
-                    Console.WriteLine(lineSB.ToString());
-                }                    
-                    
-                lineSB.Clear();
-                ++i;
-            }
+            Console.ForegroundColor = _backgroundColor;
+            Console.BackgroundColor = _backgroundColor;
+            this.Write(_columns - 2, _rows - 1, " ");
+            Console.ForegroundColor = _fontColor;
+            Console.BackgroundColor = _fontBackColor;
         }
     }
 }
+

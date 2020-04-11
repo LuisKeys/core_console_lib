@@ -7,23 +7,23 @@ namespace core_console_lib
         static void Main(string[] args)
         {
             ConsoleObj console = new ConsoleObj();
-            ConsoleKeyInfo keyInfo;
+            ConsoleInput consoleInput = new ConsoleInput(console);
 
             ConsoleUIPrimitives consoleUI = new ConsoleUIPrimitives(console);
-            consoleUI.DrawHorizLine(10, 32, 100);
-            console.Render();
+            consoleUI.DrawHorizLine(0, 32, 100);
+            console.SetColors(ConsoleColor.DarkGreen, ConsoleColor.DarkRed);
+            consoleUI.DrawHorizLine(1, 32, 100);
+            console.SetColors(ConsoleColor.DarkGreen, ConsoleColor.Black);
 
-            do            
-            {
-                keyInfo = console.ReadKey();
-            }while(keyInfo.Key != ConsoleKey.Escape);
+            consoleInput.ReadInput();
 
-            console.Render();
+            consoleUI.DrawHorizLine(2, 32, 100);
+            consoleUI.DrawHorizLine(3, 32, 100);
+            console.SetColors(ConsoleColor.DarkGreen, ConsoleColor.Black);
 
-            do            
-            {
-                keyInfo = console.ReadKey();
-            }while(keyInfo.Key != ConsoleKey.Escape);
+            consoleInput.ReadInput();
+            
+            Environment.Exit(0);
         }
     }
 }

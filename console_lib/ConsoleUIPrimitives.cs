@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace core_console_lib
 {
     public class ConsoleUIPrimitives
     {
-        ConsoleObj _console;
-        int _columns;
-        int _rows;
+        private ConsoleObj _console;
 
-        string _horizLineCharacter = "_";
+        private string _horizLineCharacter = "_";
 
         public ConsoleUIPrimitives(ConsoleObj console)
         {
@@ -25,7 +24,7 @@ namespace core_console_lib
         {
             if(!_console.IsValidCoord(columnFrom, row)) return;
             if(!_console.IsValidCoord(columnTo, row)) return;
-            
+
             if(columnFrom > columnTo)
             {
                 int columnAux = columnTo;
@@ -33,13 +32,15 @@ namespace core_console_lib
                 columnFrom = columnAux;
             }
 
-            (_columns, _rows) = _console.GetSize();            
-            char[] line = _console.GetLine(row);
-            for(int column = columnFrom; column <= columnTo; column++)
+            StringBuilder text = new StringBuilder();
+            for(int column = columnFrom; column < columnTo; ++column)
             {
-                line[column] = Convert.ToChar(character);
+                text.Append(character);
             }
-            _console.SetLine(row, line);
+
+            _console.Write(columnFrom, row, text.ToString());
+
+            _console.SendCursorToBottom();
         }
     }
 }
