@@ -82,6 +82,7 @@ namespace core_console_lib
         {
             Console.SetCursorPosition(column, row);
         }
+       
         public void Write(int column, int row, string text) 
         {
             this.SetCursorPosition(column, row);
@@ -92,9 +93,11 @@ namespace core_console_lib
         {
             Console.ForegroundColor = _backgroundColor;
             Console.BackgroundColor = _backgroundColor;
+            this.Write(_columns - 1, _rows - 1, " ");
             this.Write(_columns - 2, _rows - 1, " ");
             Console.ForegroundColor = _fontColor;
             Console.BackgroundColor = _fontBackColor;
+            Console.CursorVisible = false;
         }
     }
 }
