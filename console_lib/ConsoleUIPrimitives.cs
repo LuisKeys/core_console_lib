@@ -8,7 +8,8 @@ namespace core_console_lib
     {
         private ConsoleObj _console;
 
-        private string _horizLineCharacter = "_";
+        private string _horizLineCharacter = "=";
+        private string _vertLineCharacter = "|";
 
         public ConsoleUIPrimitives(ConsoleObj console)
         {
@@ -32,15 +33,41 @@ namespace core_console_lib
                 columnFrom = columnAux;
             }
 
-            StringBuilder text = new StringBuilder();
-            for(int column = columnFrom; column < columnTo; ++column)
+            _console.Write(columnFrom, row, character, columnTo - columnFrom + 1);
+            _console.SendCursorToBottom();
+        }
+        public void DrawVertLine(int column, int rowFrom, int rowTo)
+        {
+            this.DrawVertLine(column, rowFrom, rowTo, _vertLineCharacter);
+        }
+
+        public void DrawVertLine(int column, int rowFrom, int rowTo, string character)
+        {
+            if(!_console.IsValidCoord(column, rowFrom)) return;
+            if(!_console.IsValidCoord(column, rowTo)) return;
+
+            if(rowFrom > rowTo)
             {
-                text.Append(character);
+                int rowAux = rowTo;
+                rowTo = rowFrom;
+                rowFrom = rowAux;
             }
 
-            _console.Write(columnFrom, row, text.ToString());
+            StringBuilder text = new StringBuilder();
+            for(int row = rowFrom; row <= rowTo; row++)
+            {
+                _console.Write(column, row, character);
+            }            
 
             _console.SendCursorToBottom();
+        }
+
+        public void  DrawBox(int columnFrom, int columnTo, int rowFrom, int rowTo)
+        {
+            this.DrawHorizLine(rowFrom, columnFrom, columnTo);
+            this.DrawHorizLine(rowTo, columnFrom, columnTo);
+            this.DrawVertLine(columnFrom, rowFrom, rowTo);
+            this.DrawVertLine(columnTo, rowFrom, rowTo);
         }
     }
 }

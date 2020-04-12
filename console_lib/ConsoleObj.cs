@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace core_console_lib
 {
@@ -9,7 +10,7 @@ namespace core_console_lib
         private int _columns = 132;
         private int _rows = 43;
 
-        private ConsoleColor _fontColor = ConsoleColor.DarkYellow;
+        private ConsoleColor _fontColor = ConsoleColor.DarkCyan;
         private ConsoleColor _fontBackColor = ConsoleColor.Black;
         private ConsoleColor _backgroundColor = ConsoleColor.Black;
         private bool _isWindows = true;
@@ -42,8 +43,7 @@ namespace core_console_lib
             _fontColor = fontColor;
             _fontBackColor = fontBackColor;
             _backgroundColor = backgroundColor;
-            Console.ForegroundColor = _fontColor;
-            Console.BackgroundColor = _backgroundColor;
+
         }
 
         public void SetSize(int columns, int rows)
@@ -82,7 +82,13 @@ namespace core_console_lib
 
         public void Clear()
         {
-            Console.Clear();
+            Console.ForegroundColor = _fontColor;
+            Console.BackgroundColor = _backgroundColor;
+
+            for(int i = 0; i < _rows; i++) 
+            {
+                this.Write(0, i, " ", _columns);
+            }
         }
 
         public void SetCursorPosition(int column, int row) 
@@ -94,6 +100,20 @@ namespace core_console_lib
         {
             this.SetCursorPosition(column, row);
             Console.Write(text);
+        }
+
+        public void Write(int column, int row, string text, int repetitions) 
+        {
+            StringBuilder line = new StringBuilder();
+            this.SetCursorPosition(column, row);
+
+            for(int i = 0; i < repetitions; i++)
+            {
+                line.Append(text);
+            }
+
+            Console.Write(line.ToString());
+            line.Clear();
         }
 
         public void SendCursorToBottom() 
