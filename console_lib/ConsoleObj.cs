@@ -1,19 +1,22 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace core_console_lib
 {
     public class ConsoleObj
     {
         private int _columns = 132;
-        private int _rows = 40;
+        private int _rows = 43;
 
         private ConsoleColor _fontColor = ConsoleColor.DarkYellow;
         private ConsoleColor _fontBackColor = ConsoleColor.Black;
         private ConsoleColor _backgroundColor = ConsoleColor.Black;
+        private bool _isWindows = true;
 
         public ConsoleObj() 
         {
+            this.IsWindows();
             this.SetSize(_columns, _rows);
             this.SetColors(_fontColor, _fontBackColor, _backgroundColor);
             this.SendCursorToBottom();
@@ -21,6 +24,7 @@ namespace core_console_lib
 
         public ConsoleObj(int columns, int rows, ConsoleColor fontColor, ConsoleColor fontBackColor, ConsoleColor backgroundColor) 
         {
+            this.IsWindows();
             this.SetSize(columns, rows);
             this.SetColors(fontColor, fontBackColor, backgroundColor);
         }
@@ -45,7 +49,10 @@ namespace core_console_lib
         public void SetSize(int columns, int rows)
         {
             this.Clear();
-            Console.SetWindowSize(columns, rows + 1);
+            if(_isWindows){
+                Console.SetWindowSize(columns, rows + 1);
+            }                
+
             _columns = columns;
             _rows = rows;
         }
@@ -93,11 +100,23 @@ namespace core_console_lib
         {
             Console.ForegroundColor = _backgroundColor;
             Console.BackgroundColor = _backgroundColor;
-            this.Write(_columns - 1, _rows - 1, " ");
-            this.Write(_columns - 2, _rows - 1, " ");
+            this.Write(1, _rows - 1, " ");
             Console.ForegroundColor = _fontColor;
             Console.BackgroundColor = _fontBackColor;
             Console.CursorVisible = false;
+        }
+
+        private bool IsWindows()
+        {            
+            string windir = Environment.GetEnvironmentVariable("windir");
+            if (!string.IsNullOrEmpty(windir) && windir.Contains(@"\") && Directory.Exists(windir))
+            {
+                _isWindows = true;
+                return true;
+            }
+
+            _isWindows = false;
+            return false;
         }
     }
 }
