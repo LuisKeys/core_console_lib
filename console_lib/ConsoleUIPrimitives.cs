@@ -10,6 +10,7 @@ namespace core_console_lib
 
         private string _horizLineCharacter = "=";
         private string _vertLineCharacter = "|";
+        private string _progressBarrCharacter = "*";
 
         public ConsoleUIPrimitives(ConsoleObj console)
         {
@@ -36,6 +37,7 @@ namespace core_console_lib
             _console.Write(columnFrom, row, character, columnTo - columnFrom + 1);
             _console.SendCursorToBottom();
         }
+
         public void DrawVertLine(int column, int rowFrom, int rowTo)
         {
             this.DrawVertLine(column, rowFrom, rowTo, _vertLineCharacter);
@@ -69,5 +71,17 @@ namespace core_console_lib
             this.DrawVertLine(columnFrom, rowFrom, rowTo);
             this.DrawVertLine(columnTo, rowFrom, rowTo);
         }
+
+        public void DrawProgressBar(int column, int row, int lenght, int value)
+        {
+            this.DrawProgressBar(column, row, lenght, value, _progressBarrCharacter);
+        }         
+
+        public void DrawProgressBar(int column, int row, int lenght, int value, string character)
+        {
+            int valueUI = Convert.ToInt32(Convert.ToDouble(value) * Convert.ToDouble(lenght) / 100.0);
+            _console.Write(column, row, " ", lenght);
+            _console.Write(column, row, character, valueUI);
+        }         
     }
 }
