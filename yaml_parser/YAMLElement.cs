@@ -9,9 +9,17 @@ namespace core_console_lib
         private string _name = "";
         private List<YAMLProperty> _properties = new List<YAMLProperty>();
 
-        public void SetName(string name) 
+        public string Name
         {
-            _name = name;
+            get
+            {
+                return _name;
+            }
+
+            set
+            {
+                _name = value;
+            }
         }
 
         public void AddProperty(YAMLProperty property) 
@@ -32,7 +40,7 @@ namespace core_console_lib
                 yamlElement.AddProperty(property.Clone());
             }
 
-            yamlElement.SetName(_name);
+            yamlElement.Name = _name;
 
             return yamlElement;
         }

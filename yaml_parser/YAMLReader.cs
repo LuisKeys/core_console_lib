@@ -38,7 +38,7 @@ namespace core_console_lib
                         
                         yamlElement = new YAMLElement();
 
-                        yamlElement.SetName(yamlElement.GetElementLineValue(line));
+                        yamlElement.Name = yamlElement.GetElementLineValue(line);
                     }
                 }
 
