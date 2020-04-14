@@ -5,16 +5,29 @@ namespace core_console_lib
 {    
     public class YAMLDocument
     {
-        private List<YAMLObject> _objects = new List<YAMLObject>();
+        private List<YAMLElement> _elements = new List<YAMLElement>();
+        public const string FEED_ELEMENT_START = "---";
+        public const string FEED_ELEMENT_END = "...";
+        public const string PROPERTY_SPLITTER = ": ";
+        public const string ELEMENT_MARKER = "- !";
+        public const string DOCUMENT_MARKER = "--- !";
+        public const string COMMENT_MARKER = "# ";
+        public const string SCREEN_KEYWORD = "screen";
 
-        public void addObject(YAMLObject yamlObject) 
+        public void AddElement(YAMLElement yamlElement) 
         {
-            _objects.Add(yamlObject);
+            _elements.Add(yamlElement);
         }        
 
-        public List<YAMLObject> GetObjects() 
+        public List<YAMLElement> GetElements() 
         {
-            return _objects;
+            return _elements;
+        }
+
+        public static string GetDocumentLineValue(string line) 
+        {
+            string cleanLine = line.Replace(YAMLDocument.DOCUMENT_MARKER, "").Trim();
+            return(cleanLine);
         }
     }
 }

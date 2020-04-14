@@ -8,6 +8,8 @@ namespace core_console_lib
         static void Main(string[] args)
         {
             ConsoleObj console = new ConsoleObj();
+            YAMLReader yamlReader = new YAMLReader();
+            yamlReader.Read(@"samples\simple_screen\home.yaml");
             console.SetColors(ConsoleColor.DarkCyan, ConsoleColor.Black, ConsoleColor.Black);
             ConsoleInput consoleInput = new ConsoleInput(console);
             ConsoleUIPrimitives consoleUI = new ConsoleUIPrimitives(console);
