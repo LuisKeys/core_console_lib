@@ -1,12 +1,12 @@
 --- !screen
   # Home screen to demo basic UI controls
 - !color
-  font: red
-  back: darckblue
+  font_color: red
+  background_color: darkblue
 - !label
   name: title
   text: Hello Console Lib!
   font_color: red
-  backcolor: blue
+  background_color: blue
   column: 50
   row: 1

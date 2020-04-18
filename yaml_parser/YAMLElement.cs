@@ -51,5 +51,18 @@ namespace core_console_lib
             
             return(cleanLine);
         }
+
+        public string GetPropertyValue(string propertyName)
+        {
+            foreach(YAMLProperty property in _properties) 
+            {
+                if(property.Name == propertyName) 
+                {
+                    return property.Value;
+                }
+            }
+            
+            return null;
+        }
     }
 }

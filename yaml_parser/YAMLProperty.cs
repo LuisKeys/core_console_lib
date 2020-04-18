@@ -5,8 +5,21 @@ namespace core_console_lib
     public class  YAMLProperty
     {
         private string _name;
-        private dynamic _value;
-        public YAMLProperty(string name, dynamic value) 
+        private string _value;
+
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value;}
+        }
+
+        public string Value
+        {
+            get { return _value; }
+            set { _value = value;}
+        }
+
+           public YAMLProperty(string name, dynamic value) 
         {
             _name = name;
             _value = value;            
@@ -17,16 +30,16 @@ namespace core_console_lib
             (_name, _value) = this.ParseProperty(line);            
         }         
 
-        public (string, dynamic) GetProperty() {
+        public (string, string) GetProperty() {
             return (_name, _value);
         }
 
-        private (string, dynamic) ParseProperty(string line) 
+        private (string, string) ParseProperty(string line) 
         {
             if(line.IndexOf(YAMLDocument.PROPERTY_SPLITTER) > -1) 
             {
                 string name = line.Split(YAMLDocument.PROPERTY_SPLITTER)[0];
-                dynamic value = line.Split(YAMLDocument.PROPERTY_SPLITTER)[1];
+                string value = line.Split(YAMLDocument.PROPERTY_SPLITTER)[1];
                 return(name, value);
             }
             return(null, null);

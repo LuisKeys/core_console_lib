@@ -21,14 +21,16 @@ namespace core_console_lib
         {
             foreach(YAMLElement yamlElement in document.GetElements()) 
             {
-                string name = "";
+                string name = yamlElement.GetPropertyValue(ConsoleUIElement.NAME);
                 string type = yamlElement.Name;
-                string column = "0";
-                string row = "0";
-                string text = "";
-                string value = "";
+                string column = yamlElement.GetPropertyValue(ConsoleUIElement.COLUMN);
+                string row = yamlElement.GetPropertyValue(ConsoleUIElement.ROW);
+                string text = yamlElement.GetPropertyValue(ConsoleUIElement.TEXT);
+                string value = yamlElement.GetPropertyValue(ConsoleUIElement.VALUE);
+                string fontColor = yamlElement.GetPropertyValue(ConsoleUIElement.FONT_COLOR);
+                string backgrounColor = yamlElement.GetPropertyValue(ConsoleUIElement.BACKGROUND_COLOR);
 
-                ConsoleUIElement element = new ConsoleUIElement(name, type, column, row, text, value);
+                ConsoleUIElement element = new ConsoleUIElement(name, type, column, row, text, value, fontColor, backgrounColor);
                 _elements.Add(element);
             }
         }

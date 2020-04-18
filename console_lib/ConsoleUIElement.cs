@@ -4,24 +4,35 @@ namespace core_console_lib
 {
     public class ConsoleUIElement
     {
-        private string _name = "";
-        private string _text = "";
+        public static string BACKGROUND_COLOR = "background_color";
+        public static string COLUMN = "column";
+        public static string FONT_COLOR = "font_color";
+        public static string NAME = "name";
+        public static string ROW = "row";
+        public static string TEXT = "text";
+        public static string VALUE = "value";
+        private ConsoleColor _backgroundColor = ConsoleColor.Cyan;
         private int _column = 0;
+        private ConsoleColor _fontColor = ConsoleColor.Cyan;
+        private string _name = "";
         private int _row = 0;
-        private string _valueStr = "";
+        private string _text = "";
         private bool _valueBool = false;
-        private int _valueInt = 0;
         private double _valueDbl = 0.0;
+        private int _valueInt = 0;
+        private string _valueStr = "";
         private ConsoleUIElementTypes _type = ConsoleUIElementTypes.NONE;
         private ConsoleValueTypes _valueType = ConsoleValueTypes.NONE;        
 
-        public ConsoleUIElement(string name, string type, string column, string row, string text, string value)
+        public ConsoleUIElement(string name, string type, string column, string row, string text, string value, string fontColor, string backgrounColor)
         {
             _name = name;
             _column = Convert.ToInt32(column);
             _row = Convert.ToInt32(row);
             _text = text;
             this.SetType(type);
+            _fontColor = this.GetConsoleColor(fontColor);
+            _backgroundColor = this.GetConsoleColor(backgrounColor);
         }
 
         public void SetType(string type)
@@ -55,6 +66,7 @@ namespace core_console_lib
                     break;
             }
         }
+     
         public dynamic GetValue()
         {
             dynamic value = null;
@@ -75,6 +87,31 @@ namespace core_console_lib
             }
 
             return value;
+        }
+    
+        public ConsoleColor GetConsoleColor(string consoleColor) 
+        {
+            switch(consoleColor)
+            {
+                case "black": return ConsoleColor.Black;
+                case "blue": return ConsoleColor.Blue;
+                case "cyan": return ConsoleColor.Cyan;
+                case "darkblue": return ConsoleColor.DarkBlue;
+                case "darkcyan": return ConsoleColor.DarkCyan;
+                case "darkgray": return ConsoleColor.DarkGray;
+                case "darkgree": return ConsoleColor.DarkGreen;
+                case "darkmage": return ConsoleColor.DarkMagenta;
+                case "darkred": return ConsoleColor.DarkRed;
+                case "darkyell": return ConsoleColor.DarkYellow;
+                case "gray": return ConsoleColor.Gray;
+                case "green": return ConsoleColor.Green;
+                case "magenta": return ConsoleColor.Magenta;
+                case "red": return ConsoleColor.Red;
+                case "white": return ConsoleColor.White;
+                case "yellow": return ConsoleColor.Yellow;
+            }
+
+            return ConsoleColor.Black;
         }
     }
 }
