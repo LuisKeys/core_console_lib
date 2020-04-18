@@ -4,8 +4,10 @@ namespace core_console_lib
 {
     public enum ConsoleUIElementTypes
     {
-        NONE,
+        BOX,
         COLOR,
-        LABEL
+        LABEL,
+        NONE,
+        TABS
     }
 }

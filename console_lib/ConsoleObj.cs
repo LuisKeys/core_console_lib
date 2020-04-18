@@ -46,6 +46,12 @@ namespace core_console_lib
 
         }
 
+        public void SetFontColor(ConsoleColor fontColor)
+        {
+            _fontColor = fontColor;
+            Console.ForegroundColor = _fontColor;
+        }
+
         public void SetSize(int columns, int rows)
         {
             this.Clear();

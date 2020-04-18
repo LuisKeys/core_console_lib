@@ -9,15 +9,19 @@ namespace core_console_lib
         {
             ConsoleObj console = new ConsoleObj();
             ConsoleScreens screens = new ConsoleScreens();
-            screens.LoadScreen(@"samples\simple_screen\home.yaml");
-
             ConsoleInput consoleInput = new ConsoleInput(console);
-            ConsoleUIPrimitives consoleUI = new ConsoleUIPrimitives(console);
 
-            consoleUI.DrawBox(32, 100, 2, 20);
+            screens.LoadScreens(@"samples\simple_screen\", console);
+            screens.RenderScreen("home");
+            consoleInput.ReadInput();
 
+            screens.UpdateFieldValue("home", "pages", 1);
             consoleInput.ReadInput();
             
+
+            screens.UpdateFieldValue("home", "pages", 0);
+            consoleInput.ReadInput();
+
             Environment.Exit(0);
         }
     }

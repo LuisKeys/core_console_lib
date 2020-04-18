@@ -1,12 +1,27 @@
 --- !screen
   # Home screen to demo basic UI controls
 - !color
-  font_color: red
-  background_color: darkblue
+  font_color: cyan
+  background_color: black
+
+- !box
+  name: title_container
+  column: 0
+  row: 0
+  width: 132
+  height: 3
+
 - !label
   name: title
   text: Hello Console Lib!
-  font_color: red
-  background_color: blue
-  column: 50
+  column: 58
   row: 1
+
+- !tabs
+  name: pages
+  options: VCO, MIXER, VCF, ENV, LFO, VCA, MOD, FX
+  selected_color: yellow
+  non_selected_color: darkyellow
+  value: 2
+  column: 0
+  row: 3
